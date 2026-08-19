@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Promociones | La Mesa Dorada</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f4ee;
+            color: #333;
+        }
+
+        /* ===== ENCABEZADO ===== */
+
+        header {
+            background:
+                linear-gradient(
+                    rgba(224, 9, 9, 0.88),
+                    rgba(216, 11, 11, 0.88)
+                );
+
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 20px;
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+
+        /* ===== CONTENEDOR ===== */
+
+        .contenedor {
+            width: 90%;
+            max-width: 1150px;
+            margin: 55px auto;
+        }
+
+
+        /* ===== INTRODUCCIÓN ===== */
+
+        .introduccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .introduccion h2 {
+            color: #ff0000cb;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .introduccion p {
+            max-width: 800px;
+            margin: auto;
+            color: #666;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+
+        /* ===== PROMOCIONES ===== */
+
+        .promociones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+
+        .promocion {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+        .promocion:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 15px 30px rgba(0,0,0,0.15);
+        }
+
+
+        /* PARTE SUPERIOR */
+
+        .parte-superior {
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .rojo {
+            background: linear-gradient(
+                135deg,
+                #ff0000d7
+                
+            );
+        }
+
+        .naranja {
+            background: linear-gradient(
+                135deg,
+                #e67e22,
+                #d35400
+            );
+        }
+
+        .verde {
+            background: linear-gradient(
+                135deg,
+                #287a4a,
+                #1e8449
+            );
+        }
+
+        .dorado {
+            background: linear-gradient(
+                135deg,
+                #b8860b,
+                #e0a800
+            );
+        }
+
+
+        .icono {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .parte-superior h3 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+
+        /* CONTENIDO */
+
+        .contenido {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .contenido h4 {
+            color: #ff0000d5;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .contenido p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+
+        /* PRECIO */
+
+        .precio {
+            font-size: 30px;
+            color: #e67e22;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .precio-anterior {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 17px;
+            margin-right: 8px;
+        }
+
+
+        /* BOTÓN */
+
+        .boton {
+            display: inline-block;
+
+            padding: 13px 28px;
+
+            background: #ff0000;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            background: #e67e22;
+            transform: scale(1.05);
+        }
+
+
+        /* ===== CONDICIONES ===== */
+
+        .condiciones {
+            background: white;
+
+            margin-top: 45px;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .condiciones h2 {
+            text-align: center;
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+
+        .condiciones ul {
+            max-width: 700px;
+            margin: auto;
+            line-height: 2;
+            color: #666;
+        }
+
+
+        /* ===== VOLVER ===== */
+
+        .volver {
+            display: block;
+
+            width: fit-content;
+
+            margin: 40px auto;
+
+            padding: 14px 35px;
+
+            background: #ff0000;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .volver:hover {
+            background: #e67e22;
+            transform: scale(1.05);
+        }
+
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            background: #291712;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        footer h2 {
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            color: #ddd;
+            margin: 6px;
+        }
+
+
+        /* ===== CELULAR ===== */
+
+        @media (max-width: 800px) {
+
+            header h1 {
+                font-size: 38px;
+            }
+
+            .promociones {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        .boton-testimonios {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 30px;
+
+    background: linear-gradient(135deg, #8B0000, #c0392b);
+
+    color: white;
+    text-decoration: none;
+
+    border-radius: 30px;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.boton-testimonios:hover {
+    transform: translateY(-4px);
+
+    background: linear-gradient(135deg, #c0392b, #e67e22);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===== ENCABEZADO ===== -->
+
+<header>
+
+    <h1>🎉 Promociones</h1>
+
+    <p>
+        Disfruta de nuestras promociones especiales
+        y comparte momentos inolvidables en
+        La Mesa Dorada.
+    </p>
+
+</header>
+
+
+
+<div class="contenedor">
+
+
+    <!-- ===== INTRODUCCIÓN ===== -->
+
+    <section class="introduccion">
+
+        <h2>✨ Promociones Especiales</h2>
+
+        <p>
+
+            En La Mesa Dorada queremos que disfrutes
+            de nuestros sabores favoritos a precios
+            especiales. Conoce nuestras promociones
+            y aprovecha cada oportunidad para compartir
+            una deliciosa comida con tu familia y amigos.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ===== TARJETAS ===== -->
+
+    <section class="promociones">
+
+
+        <!-- PROMOCIÓN 1 -->
+
+        <div class="promocion">
+
+            <div class="parte-superior rojo">
+
+                <div class="icono">🍗</div>
+
+                <h3>Combo Familiar</h3>
+
+                <p>
+                    ¡Perfecto para compartir!
+                </p>
+
+            </div>
+
+
+            <div class="contenido">
+
+                <h4>Combo para 4 personas</h4>
+
+                <p>
+
+                    Pollo a la plancha, arroz,
+                    ensalada, papas fritas y
+                    cuatro bebidas.
+
+                </p>
+
+                <div class="precio">
+
+                    <span class="precio-anterior">
+                        $32.00
+                    </span>
+
+                    $25.00
+
+                </div>
+
+               <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+            </div>
+
+        </div>
+
+
+
+        <!-- PROMOCIÓN 2 -->
+
+        <div class="promocion">
+
+            <div class="parte-superior naranja">
+
+                <div class="icono">🫓</div>
+
+                <h3>Martes de Pupusas</h3>
+
+                <p>
+                    Una tradición que nos encanta.
+                </p>
+
+            </div>
+
+
+            <div class="contenido">
+
+                <h4>Promoción especial</h4>
+
+                <p>
+
+                    Disfruta nuestras deliciosas
+                    pupusas de queso, frijol y
+                    chicharrón.
+
+                </p>
+
+                <div class="precio">
+
+                    $1.00
+
+                </div>
+
+                 <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROMOCIÓN 3 -->
+
+        <div class="promocion">
+
+            <div class="parte-superior verde">
+
+                <div class="icono">🥤</div>
+
+                <h3>Bebida Gratis</h3>
+
+                <p>
+                    Acompaña tu comida.
+                </p>
+
+            </div>
+
+
+            <div class="contenido">
+
+                <h4>Promoción del día</h4>
+
+                <p>
+
+                    Al ordenar dos platos fuertes,
+                    recibe una bebida natural
+                    completamente gratis.
+
+                </p>
+
+                <div class="precio">
+
+                    🎁 GRATIS
+
+                </div>
+
+                 <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROMOCIÓN 4 -->
+
+        <div class="promocion">
+
+            <div class="parte-superior dorado">
+
+                <div class="icono">🎂</div>
+
+                <h3>Cumpleañero</h3>
+
+                <p>
+                    Celebra tu día especial.
+                </p>
+
+            </div>
+
+
+            <div class="contenido">
+
+                <h4>Un detalle para ti</h4>
+
+                <p>
+
+                    Si estás celebrando tu cumpleaños,
+                    recibe un postre especial
+                    cortesía de La Mesa Dorada.
+
+                </p>
+
+                <div class="precio">
+
+                    🎁 GRATIS
+
+                </div>
+
+                <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+                
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ===== CONDICIONES ===== -->
+
+    <section class="condiciones">
+
+        <h2>📋 Información de las promociones</h2>
+
+        <ul>
+
+            <li>
+                Las promociones están sujetas a disponibilidad.
+            </li>
+
+            <li>
+                Algunas promociones pueden tener días específicos.
+            </li>
+
+            <li>
+                Los precios pueden cambiar sin previo aviso.
+            </li>
+
+            <li>
+                Las promociones no son acumulables con otros descuentos.
+            </li>
+
+            <li>
+                Consulta con nuestro personal para conocer
+                las promociones disponibles.
+            </li>
+
+        </ul>
+
+    </section>
+
+<div style="text-align: center;">
+
+    <a href="/testimonios" class="boton-testimonios">
+        ⭐ Ver opiniones de nuestros clientes
+    </a>
+
+    <!-- ===== BOTÓN ===== -->
+
+    <a href="/" class="volver">
+
+        🏠 Volver al inicio
+
+    </a>
+
+
+</div>
+
+
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+
+    <h2>🍽️ La Mesa Dorada</h2>
+
+    <p>
+        Sabores que crean momentos inolvidables.
+    </p>
+
+    <p>
+        📍 Armenia, Sonsonate, El Salvador
+    </p>
+
+    <p>
+        📞 +503 6162-6690
+    </p>
+
+    <p>
+        © 2026 La Mesa Dorada - Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contacto | La Mesa Dorada</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f4ee;
+            color: #333;
+        }
+
+        /* ENCABEZADO */
+
+        header {
+            background: linear-gradient(
+                135deg,
+                #6b0000,
+                #a80000,
+                #c0392b
+            );
+
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 19px;
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+
+        /* CONTENEDOR */
+
+        .contenedor {
+            width: 90%;
+            max-width: 1100px;
+            margin: 55px auto;
+        }
+
+
+        /* VISITANOS */
+
+        .visitanos {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .visitanos h2 {
+            color: #8B0000;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .visitanos p {
+            max-width: 750px;
+            margin: auto;
+            color: #666;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+
+        /* TARJETAS */
+
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 35px 25px;
+            text-align: center;
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-8px);
+        }
+
+
+        .icono {
+            width: 75px;
+            height: 75px;
+
+            margin: auto;
+            margin-bottom: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #fff1e6;
+            border-radius: 50%;
+
+            font-size: 35px;
+        }
+
+
+        .tarjeta h3 {
+            color: #8B0000;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+
+        .tarjeta p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        /* HORARIOS */
+
+        .horarios {
+            background: white;
+            padding: 40px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            margin-bottom: 50px;
+        }
+
+        .horarios h2 {
+            color: #8B0000;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .horarios p {
+            color: #666;
+            font-size: 18px;
+            margin: 8px;
+        }
+
+        .hora {
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+
+        /* REDES SOCIALES */
+
+        .redes {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .redes h2 {
+            color: #8B0000;
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .redes p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+
+        .redes-contenedor {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+
+        .red-social {
+            min-width: 150px;
+
+            padding: 15px 22px;
+
+            border-radius: 30px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .red-social:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 8px 18px rgba(0,0,0,0.2);
+        }
+
+
+        /* COLORES REDES */
+
+        .facebook {
+            background: #1877F2;
+        }
+
+        .instagram {
+            background: linear-gradient(
+                45deg,
+                #feda75,
+                #d62976,
+                #4f5bd5
+            );
+        }
+
+        .tiktok {
+            background: #111;
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .youtube {
+            background: #FF0000;
+        }
+
+        .x {
+            background: #000;
+        }
+
+
+        /* BOTON INICIO */
+
+        .volver {
+            display: block;
+
+            width: fit-content;
+
+            margin: 0 auto 50px;
+
+            padding: 14px 35px;
+
+            background: #8B0000;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .volver:hover {
+            background: #e67e22;
+
+            transform: scale(1.05);
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background: #291712;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 40px 20px;
+        }
+
+        footer h2 {
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            color: #ddd;
+            margin: 6px;
+        }
+
+
+        /* CELULARES */
+
+        @media (max-width: 800px) {
+
+            header h1 {
+                font-size: 38px;
+            }
+
+            .tarjetas {
+                grid-template-columns: 1fr;
+            }
+
+            .visitanos h2 {
+                font-size: 30px;
+            }
+
+            .red-social {
+                width: 90%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ENCABEZADO -->
+
+<header>
+
+    <h1>📞 Contáctanos</h1>
+
+    <p>
+        Estamos encantados de atenderte y ayudarte.
+        En La Mesa Dorada queremos que disfrutes
+        de una experiencia gastronómica inolvidable.
+    </p>
+
+</header>
+
+
+
+<div class="contenedor">
+
+
+    <!-- VISITANOS CENTRADO -->
+
+    <section class="visitanos">
+
+        <h2>🍽️ Visítanos</h2>
+
+        <p>
+
+            Ven a disfrutar de nuestros deliciosos platillos,
+            un ambiente agradable y la atención que mereces.
+
+            <br>
+
+            En <strong>La Mesa Dorada</strong> trabajamos cada día
+            para ofrecerte una experiencia especial junto a tu
+            familia y amigos.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- INFORMACIÓN -->
+
+    <div class="tarjetas">
+
+
+        <div class="tarjeta">
+
+            <div class="icono">
+                📞
+            </div>
+
+            <h3>Teléfono</h3>
+
+            <p>
+                +503 6162-6690
+            </p>
+
+            <p>
+                Comunícate con nosotros
+                para realizar consultas o reservas.
+            </p>
+
+        </div>
+
+
+
+        <div class="tarjeta">
+
+            <div class="icono">
+                📧
+            </div>
+
+            <h3>Correo electrónico</h3>
+
+            <p>
+                contacto@lamesadorada.com
+            </p>
+
+            <p>
+                Escríbenos para obtener
+                más información.
+            </p>
+
+        </div>
+
+
+
+        <div class="tarjeta">
+
+            <div class="icono">
+                📍
+            </div>
+
+            <h3>Dirección</h3>
+
+            <p>
+                Armenia, Sonsonate
+            </p>
+
+            <p>
+                El Salvador
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- HORARIOS -->
+
+    <section class="horarios">
+
+        <h2>🕐 Horario de Atención</h2>
+
+        <p>
+            Lunes a Domingo
+        </p>
+
+        <p class="hora">
+            24/7
+        </p>
+
+        <p>
+            ¡Te esperamos para disfrutar
+            de nuestros deliciosos platillos!
+        </p>
+
+    </section>
+
+
+
+    <!-- REDES -->
+
+    <section class="redes">
+
+        <h2>🌐 Síguenos en nuestras redes</h2>
+
+        <p>
+            Conoce nuestras novedades, promociones
+            y nuevos platillos.
+        </p>
+
+
+        <div class="redes-contenedor">
+
+
+            <a href="https://www.facebook.com/omar.hernandezperez.718"
+               class="red-social facebook">
+
+                📘 Facebook
+
+            </a>
+
+
+            <a href="https://www.instagram.com/omar_h_787/"
+               class="red-social instagram">
+
+                📸 Instagram
+
+            </a>
+
+
+            <a href="https://www.tiktok.com/@omar___11_"
+               class="red-social tiktok">
+
+                🎵 TikTok
+
+            </a>
+
+
+          
+
+
+        
+
+
+           
+
+        </div>
+
+    </section>
+
+
+
+    <!-- VOLVER -->
+
+    <a href="/" class="volver">
+
+        🏠 Volver al inicio
+
+    </a>
+
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h2>🍽️ La Mesa Dorada</h2>
+
+    <p>
+        Sabores que crean momentos inolvidables.
+    </p>
+
+    <p>
+        📍 Armenia, Sonsonate, El Salvador
+    </p>
+
+    <p>
+        📞 +503 6162-6690
+    </p>
+
+    <p>
+        © 2026 La Mesa Dorada - Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

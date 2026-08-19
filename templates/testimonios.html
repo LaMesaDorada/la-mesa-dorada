@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Opiniones | La Mesa Dorada</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f4ee;
+            color: #333;
+        }
+
+
+        /* ===== ENCABEZADO ===== */
+
+        header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #7b0000,
+                    #b22222
+                );
+
+            color: white;
+            text-align: center;
+            padding: 85px 20px;
+        }
+
+        header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            max-width: 800px;
+            margin: auto;
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+
+        /* ===== CONTENEDOR ===== */
+
+        .contenedor {
+            width: 90%;
+            max-width: 1150px;
+            margin: 60px auto;
+        }
+
+
+        /* ===== INTRODUCCIÓN ===== */
+
+        .introduccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .introduccion h2 {
+            color: #8B0000;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .introduccion p {
+            max-width: 850px;
+            margin: auto;
+            color: #666;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+
+        /* ===== RESUMEN ===== */
+
+        .resumen {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            margin-bottom: 50px;
+        }
+
+        .resumen h2 {
+            color: #8B0000;
+            margin-bottom: 15px;
+        }
+
+        .estrellas {
+            font-size: 35px;
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+
+        .resumen p {
+            color: #666;
+        }
+
+
+        /* ===== TESTIMONIOS ===== */
+
+        .testimonios {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .testimonio {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+        .testimonio:hover {
+            transform: translateY(-8px);
+        }
+
+        .cliente {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #fff1e6;
+
+            font-size: 28px;
+        }
+
+        .cliente h3 {
+            color: #8B0000;
+            margin-bottom: 4px;
+        }
+
+        .calificacion {
+            color: #e67e22;
+        }
+
+        .testimonio p {
+            color: #666;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+
+        /* ===== SECCIÓN FINAL ===== */
+
+        .final {
+            margin-top: 55px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff4e6,
+                    #ffffff
+                );
+
+            border-left: 6px solid #e67e22;
+
+            padding: 40px;
+
+            text-align: center;
+
+            border-radius: 18px;
+        }
+
+        .final h2 {
+            color: #8B0000;
+            margin-bottom: 15px;
+        }
+
+        .final p {
+            max-width: 750px;
+            margin: auto;
+            color: #666;
+            line-height: 1.7;
+        }
+
+
+        /* ===== BOTÓN ===== */
+
+        .boton {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 15px 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e67e22,
+                    #c0392b
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 8px 20px rgba(192,57,43,0.3);
+        }
+
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            background: #291712;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            margin-top: 60px;
+        }
+
+        footer h2 {
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            color: #ddd;
+            margin: 7px;
+        }
+
+
+        /* ===== CELULAR ===== */
+
+        @media (max-width: 850px) {
+
+            header h1 {
+                font-size: 38px;
+            }
+
+            .testimonios {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===== ENCABEZADO ===== -->
+
+<header>
+
+    <h1>⭐ Opiniones de nuestros clientes</h1>
+
+    <p>
+
+        Conoce las experiencias y comentarios de
+        quienes han visitado La Mesa Dorada.
+
+    </p>
+
+</header>
+
+
+
+<div class="contenedor">
+
+
+    <!-- ===== INTRODUCCIÓN ===== -->
+
+    <section class="introduccion">
+
+        <h2>
+            ❤️ Tu opinión es importante
+        </h2>
+
+        <p>
+
+            En La Mesa Dorada trabajamos cada día para
+            ofrecer una excelente atención, deliciosos
+            platillos y un ambiente agradable.
+
+            <br><br>
+
+            La experiencia de nuestros clientes nos ayuda
+            a continuar mejorando y ofrecer un servicio
+            cada vez mejor.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ===== RESUMEN ===== -->
+
+    <section class="resumen">
+
+        <h2>
+            ⭐ La experiencia de nuestros clientes
+        </h2>
+
+        <div class="estrellas">
+            ★★★★★
+        </div>
+
+        <p>
+            Nos esforzamos por brindar una experiencia
+            especial en cada visita.
+        </p>
+
+    </section>
+
+
+
+    <!-- ===== TESTIMONIOS ===== -->
+
+    <section class="testimonios">
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👩
+                </div>
+
+                <div>
+
+                    <h3>
+                        María G.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "La comida estuvo deliciosa y la atención
+                fue excelente. El ambiente es muy agradable
+                para compartir con la familia."
+
+            </p>
+
+        </div>
+
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👨
+                </div>
+
+                <div>
+
+                    <h3>
+                        Carlos R.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "Un lugar excelente para disfrutar de una
+                buena comida. El personal fue muy amable
+                y el servicio fue rápido."
+
+            </p>
+
+        </div>
+
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👩
+                </div>
+
+                <div>
+
+                    <h3>
+                        Ana M.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "Celebramos un cumpleaños y todo estuvo
+                muy bien organizado. Definitivamente
+                volveríamos a La Mesa Dorada."
+
+            </p>
+
+        </div>
+
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👨
+                </div>
+
+                <div>
+
+                    <h3>
+                        José L.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "Me gustó mucho el ambiente del restaurante.
+                La comida tiene muy buen sabor y la atención
+                fue excelente."
+
+            </p>
+
+        </div>
+
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👩
+                </div>
+
+                <div>
+
+                    <h3>
+                        Laura P.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "Un restaurante muy bonito para compartir
+                con amigos y familiares. La experiencia
+                fue muy agradable."
+
+            </p>
+
+        </div>
+
+
+
+        <div class="testimonio">
+
+            <div class="cliente">
+
+                <div class="avatar">
+                    👨
+                </div>
+
+                <div>
+
+                    <h3>
+                        Daniel C.
+                    </h3>
+
+                    <div class="calificacion">
+                        ★★★★★
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p>
+
+                "Excelente servicio y un ambiente cómodo.
+                Sin duda es un lugar que recomendaría
+                a otras personas."
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ===== MENSAJE FINAL ===== -->
+
+    <section class="final">
+
+        <h2>
+            🍽️ ¿Quieres vivir la experiencia?
+        </h2>
+
+        <p>
+
+            Te invitamos a visitar La Mesa Dorada y
+            disfrutar de nuestra atención y nuestros
+            platillos. Será un placer recibirte.
+
+        </p>
+
+
+            <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+
+    </section>
+
+
+</div>
+
+ <div style="text-align: center;">
+
+            <a href="/" class="boton">
+                🏠 Volver al Inicio
+            </a>
+
+        
+
+            
+
+        </div>
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+
+    <h2>
+        🍽️ La Mesa Dorada
+    </h2>
+
+    <p>
+        Sabores que crean momentos inolvidables.
+    </p>
+
+    <p>
+        📍 Armenia, Sonsonate, El Salvador
+    </p>
+
+    <p>
+        🕐 Abierto 24/7
+    </p>
+
+    <p>
+        © 2026 La Mesa Dorada - Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

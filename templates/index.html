@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='icono2.png') }}">
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Restaurante La Mesa Dorada</title>
+
+
+<style>
+
+/* ============================= */
+/* DISEÑO PARA CELULARES */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        padding: 50px 20px;
+    }
+
+    header h1 {
+        font-size: 34px;
+    }
+
+    header p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .contenedor {
+        width: 90%;
+        margin: 30px auto;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .redes-sociales {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .redes-sociales h2 {
+        font-size: 25px;
+    }
+
+    .redes-sociales a {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 14px;
+    }
+
+    .boton {
+        width: 100%;
+        text-align: center;
+        padding: 14px;
+    }
+
+    footer {
+        padding: 30px 15px;
+    }
+
+    footer h2 {
+        font-size: 24px;
+    }
+
+    footer p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+}
+
+</style>
+
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- ENCABEZADO -->
+
+<header>
+
+    <h1>🍽 La Mesa Dorada</h1>
+
+    <nav>
+
+        <button class="menu-btn"
+                onclick="mostrarMenu()">
+
+            ☰ Menú
+
+        </button>
+
+
+        <ul id="menuMovil">
+
+            <li>
+                <a href="/">Inicio</a>
+            </li>
+
+            <li>
+                <a href="/#Reservaciones">
+                    Reservaciones
+                </a>
+            </li>
+
+            <li>
+                <a href="/ubicacion">
+                    Ver ubicación
+                </a>
+            </li>
+
+            <li>
+                <a href="/nosotros">
+                    Nosotros
+                </a>
+            </li>
+
+            <li>
+                <a href="/contacto">
+                    Contacto
+                </a>
+            </li>
+
+            <li>
+                <a href="/promociones">
+                    Promociones
+                </a>
+            </li>
+
+            <li>
+                <a href="/eventos">
+                    Eventos
+                </a>
+            </li>
+
+            <li>
+                <a href="/horarios">
+                    Horarios
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+
+<!-- PORTADA -->
+
+<section class="hero" id="inicio">
+
+    <div>
+
+        <h2>
+            Bienvenido a La Mesa Dorada
+        </h2>
+
+        <p>
+            Disfruta de los mejores platillos
+            preparados con ingredientes frescos.
+        </p>
+
+        <a href="#menu" class="boton">
+            Ver Menú
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- MENÚ -->
+
+<section id="menu">
+
+    <h2>Nuestro Menú</h2>
+
+
+    <!-- ============================= -->
+    <!-- PIZZAS -->
+    <!-- ============================= -->
+
+    <h2>Nuestras pizzas</h2>
+
+    <div class="menu">
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/pizza pepperoni.jpg') }}"
+                alt="Pizza Pepperoni">
+
+            <h3>
+                Pizza Pepperoni
+            </h3>
+
+            <p>
+                Pizza con queso mozzarella y pepperoni.
+            </p>
+
+            <span class="precio">
+                $12.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/pizza hawaiana.jpg') }}"
+                alt="Pizza Hawaiana">
+
+            <h3>
+                Pizza Hawaiana
+            </h3>
+
+            <p>
+                Jamón, piña y queso mozzarella.
+            </p>
+
+            <span class="precio">
+                $13.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/pizza suprema.jpg') }}"
+                alt="Pizza Suprema">
+
+            <h3>
+                Pizza Suprema
+            </h3>
+
+            <p>
+                Pepperoni, jamón, champiñones y vegetales.
+            </p>
+
+            <span class="precio">
+                $12.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/pizza especiall.jpg') }}"
+                alt="Pizza Especial">
+
+            <h3>
+                Pizza Especial
+            </h3>
+
+            <p>
+                Pizza preparada con queso en sus orillas,
+                mozzarella, pepperoni y vegetales frescos.
+            </p>
+
+            <span class="precio">
+                $15.99
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- HAMBURGUESAS -->
+    <!-- ============================= -->
+
+    <h2>Nuestras hamburguesas</h2>
+
+    <div class="menu">
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/hamburguesa clasicaa.avif') }}"
+                alt="Hamburguesa Clásica">
+
+            <h3>
+                Hamburguesa Clásica
+            </h3>
+
+            <p>
+                Carne de res, queso, lechuga y tomate.
+            </p>
+
+            <span class="precio">
+                $8.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/hamburguesa bbq.jpg') }}"
+                alt="Hamburguesa BBQ">
+
+            <h3>
+                Hamburguesa BBQ
+            </h3>
+
+            <p>
+                Carne, queso cheddar, tocino y salsa BBQ.
+            </p>
+
+            <span class="precio">
+                $10.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/hamburguesa gourmet.jpg') }}"
+                alt="Hamburguesa Gourmet">
+
+            <h3>
+                Hamburguesa Gourmet
+            </h3>
+
+            <p>
+                Carne 100% de res acompañada de papas fritas.
+            </p>
+
+            <span class="precio">
+                $9.99
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- PLATILLOS FUERTES -->
+    <!-- ============================= -->
+
+    <h2>
+        Nuestros platillos fuertes
+    </h2>
+
+    <div class="menu">
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/classic_alfredo_pasta.jpg') }}"
+                alt="Pasta Alfredo">
+
+            <h3>
+                Pasta Alfredo
+            </h3>
+
+            <p>
+                Salsa Alfredo con pollo a la parrilla.
+            </p>
+
+            <span class="precio">
+                $11.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/espaguti.jpg') }}"
+                alt="Espagueti Boloñesa">
+
+            <h3>
+                Espagueti Boloñesa
+            </h3>
+
+            <p>
+                Carne molida en salsa de tomate casera.
+            </p>
+
+            <span class="precio">
+                $10.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/filete de res.jpg') }}"
+                alt="Filete de Res">
+
+            <h3>
+                Filete de Res
+            </h3>
+
+            <p>
+                Servido con papas y vegetales frescos.
+            </p>
+
+            <span class="precio">
+                $18.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/pollo a la plancha.jpg') }}"
+                alt="Pollo a la Parrilla">
+
+            <h3>
+                Pollo a la Parrilla
+            </h3>
+
+            <p>
+                Pechuga marinada acompañada de arroz y ensalada.
+            </p>
+
+            <span class="precio">
+                $12.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/costilla.jpg') }}"
+                alt="Costillas BBQ">
+
+            <h3>
+                Costillas BBQ
+            </h3>
+
+            <p>
+                Jugosas costillas de cerdo bañadas en salsa BBQ,
+                servidas con papas fritas.
+            </p>
+
+            <span class="precio">
+                $16.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/chuleta.jpg') }}"
+                alt="Chuleta de Cerdo">
+
+            <h3>
+                Chuleta de Cerdo
+            </h3>
+
+            <p>
+                Chuleta de cerdo a la plancha con puré de papa
+                y ensalada fresca.
+            </p>
+
+            <span class="precio">
+                $14.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/salmon.jpg') }}"
+                alt="Salmón a la Parrilla">
+
+            <h3>
+                Salmón a la Parrilla
+            </h3>
+
+            <p>
+                Filete de salmón fresco acompañado de vegetales
+                salteados y arroz blanco.
+            </p>
+
+            <span class="precio">
+                $17.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/ensalada.jpg') }}"
+                alt="Ensalada César">
+
+            <h3>
+                Ensalada César
+            </h3>
+
+            <p>
+                Lechuga, pollo, queso parmesano y crutones.
+            </p>
+
+            <span class="precio">
+                $8.99
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- BEBIDAS -->
+    <!-- ============================= -->
+
+    <h2>
+        Bebidas
+    </h2>
+
+    <div class="menu">
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/l.jpg') }}"
+                alt="Limonada">
+
+            <h3>
+                Limonada
+            </h3>
+
+            <p>
+                Limonada natural.
+            </p>
+
+            <span class="precio">
+                $2.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/a.jpg') }}"
+                alt="Horchata">
+
+            <h3>
+                Horchata
+            </h3>
+
+            <p>
+                Horchata.
+            </p>
+
+            <span class="precio">
+                $2.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/bebida_coca_cola_lata.jpg') }}"
+                alt="Coca-Cola">
+
+            <h3>
+                Coca-Cola
+            </h3>
+
+            <p>
+                Coca-Cola.
+            </p>
+
+            <span class="precio">
+                $2.50
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- POSTRES -->
+    <!-- ============================= -->
+
+    <h2>
+        Postres
+    </h2>
+
+    <div class="menu">
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/Cheesecake.jpg') }}"
+                alt="Cheesecake">
+
+            <h3>
+                Cheesecake
+            </h3>
+
+            <p>
+                Pastel de queso con salsa de fresa.
+            </p>
+
+            <span class="precio">
+                $5.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/Brownie con Helado.jpg') }}"
+                alt="Brownie con Helado">
+
+            <h3>
+                Brownie con Helado
+            </h3>
+
+            <p>
+                Brownie caliente acompañado de helado de vainilla.
+            </p>
+
+            <span class="precio">
+                $6.99
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="{{ url_for('static', filename='imagenes/Flan Casero.jpg') }}"
+                alt="Flan">
+
+            <h3>
+                Flan Casero
+            </h3>
+
+            <p>
+                Flan tradicional con caramelo.
+            </p>
+
+            <span class="precio">
+                $4.99
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- RESERVACIONES -->
+<!-- ============================= -->
+
+<section id="Reservaciones" class="Reservaciones">
+
+    <h2>
+        Reservaciones
+    </h2>
+
+
+    <form action="/reservar" method="POST">
+
+
+        <label>
+            Nombre completo
+        </label>
+
+        <input
+            type="text"
+            name="nombre"
+            id="nombre"
+            maxlength="40"
+            required
+        >
+
+
+        <label>
+            Correo Electrónico
+        </label>
+
+        <input
+            type="email"
+            name="correo"
+            id="correo"
+            maxlength="40"
+            required
+        >
+
+
+        <label>
+            Número de teléfono
+        </label>
+
+        <input
+            type="text"
+            name="telefono"
+            id="telefono"
+            placeholder="0000-0000"
+            maxlength="9"
+            required
+        >
+
+
+        <label>
+            Fecha de la Reserva
+        </label>
+
+        <input
+            type="date"
+            id="fecha"
+            name="fecha"
+            required
+        >
+
+
+        <label>
+            Hora de la Reserva
+        </label>
+
+        <input
+            type="time"
+            id="hora"
+            name="hora"
+            required
+        >
+
+
+        <label>
+            Número de Personas
+        </label>
+
+        <select
+            name="personas"
+            required
+        >
+
+            <option value="">
+                Seleccione...
+            </option>
+
+            <option>
+                1 Persona
+            </option>
+
+            <option>
+                2 Personas
+            </option>
+
+            <option>
+                3 Personas
+            </option>
+
+            <option>
+                4 Personas
+            </option>
+
+            <option>
+                5 Personas
+            </option>
+
+            <option>
+                Más de 5 Personas
+            </option>
+
+        </select>
+
+
+        <label>
+            Comentarios
+        </label>
+
+        <textarea
+            name="comentarios"
+            rows="4"
+        ></textarea>
+
+
+        <button type="submit">
+            Reservar
+        </button>
+
+
+    </form>
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- PIE DE PÁGINA -->
+<!-- ============================= -->
+
+<footer>
+
+    <p>
+        © 2026 Restaurante La Mesa Dorada |
+        Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+
+<!-- ============================= -->
+<!-- FECHA MÍNIMA -->
+<!-- ============================= -->
+
+<script>
+
+const hoy =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+document
+    .getElementById("fecha")
+    .setAttribute("min", hoy);
+
+</script>
+
+
+
+<!-- ============================= -->
+<!-- MÁSCARA DE TELÉFONO -->
+<!-- ============================= -->
+
+<script>
+
+document
+    .getElementById("telefono")
+    .addEventListener("input", function(e) {
+
+        let valor =
+            e.target.value.replace(/\D/g, "");
+
+        if (valor.length > 4) {
+
+            valor =
+                valor.substring(0, 4)
+                + "-"
+                + valor.substring(4, 8);
+
+        }
+
+        e.target.value = valor;
+
+    });
+
+</script>
+
+
+
+<!-- ============================= -->
+<!-- MENÚ -->
+<!-- ============================= -->
+
+<script>
+
+function mostrarMenu(){
+
+    document
+        .getElementById("menuMovil")
+        .classList
+        .toggle("mostrar");
+
+}
+
+
+document
+    .querySelectorAll("#menuMovil a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .getElementById("menuMovil")
+                    .classList
+                    .remove("mostrar");
+
+            }
+        );
+
+    });
+
+</script>
+
+
+
+<!-- ============================= -->
+<!-- CERRAR MENÚ -->
+<!-- ============================= -->
+
+<script>
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const menu =
+            document.getElementById("menuMovil");
+
+        const boton =
+            document.querySelector(".menu-btn");
+
+
+        if(
+            !menu.contains(event.target) &&
+            !boton.contains(event.target)
+        ){
+
+            menu
+                .classList
+                .remove("mostrar");
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

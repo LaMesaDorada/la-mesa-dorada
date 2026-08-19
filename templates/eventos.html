@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eventos | La Mesa Dorada</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f4ee;
+            color: #333;
+        }
+
+        /* ===== ENCABEZADO ===== */
+
+        header {
+            background:
+                linear-gradient(
+                    rgba(219, 15, 15, 0.911),
+                    rgba(226, 14, 14, 0.877)
+                );
+
+            color: white;
+            text-align: center;
+            padding: 85px 20px;
+        }
+
+        header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            max-width: 800px;
+            margin: auto;
+            font-size: 20px;
+            line-height: 1.7;
+        }
+
+
+        /* ===== CONTENEDOR ===== */
+
+        .contenedor {
+            width: 90%;
+            max-width: 1150px;
+            margin: 55px auto;
+        }
+
+
+        /* ===== INTRODUCCIÓN ===== */
+
+        .introduccion {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .introduccion h2 {
+            color: #8B0000;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .introduccion p {
+            max-width: 850px;
+            margin: auto;
+            color: #666;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+
+        /* ===== EVENTOS ===== */
+
+        .eventos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+
+        .evento {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+        .evento:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 15px 30px rgba(0,0,0,0.15);
+        }
+
+
+        .icono {
+            width: 80px;
+            height: 80px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+
+            background: #fff1e6;
+
+            border-radius: 50%;
+
+            font-size: 40px;
+        }
+
+
+        .evento h3 {
+            color: #8B0000;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+
+        .evento p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+
+        .evento ul {
+            color: #555;
+            line-height: 2;
+            padding-left: 20px;
+        }
+
+
+        /* ===== PAQUETES ===== */
+
+        .paquetes {
+            margin-top: 60px;
+        }
+
+        .paquetes h2 {
+            text-align: center;
+            color: #8B0000;
+            font-size: 36px;
+            margin-bottom: 35px;
+        }
+
+
+        .paquetes-contenedor {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+
+        .paquete {
+            background: white;
+            text-align: center;
+
+            padding: 35px 25px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            transition: 0.3s;
+        }
+
+
+        .paquete:hover {
+            transform: translateY(-8px);
+        }
+
+
+        .paquete h3 {
+            color: #8B0000;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+
+        .paquete .emoji {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+
+        .paquete p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+
+        .paquete ul {
+            text-align: left;
+            padding-left: 25px;
+            color: #555;
+            line-height: 2;
+        }
+
+
+        /* ===== IMPORTANTE ===== */
+
+        .informacion {
+            margin-top: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff4e6,
+                    #ffffff
+                );
+
+            border-left: 6px solid #e67e22;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            text-align: center;
+        }
+
+
+        .informacion h2 {
+            color: #8B0000;
+            margin-bottom: 15px;
+        }
+
+
+        .informacion p {
+            color: #666;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: auto;
+        }
+
+
+        /* ===== BOTÓN ===== */
+
+        .boton {
+            display: block;
+            width: fit-content;
+
+            margin: 40px auto;
+
+            padding: 15px 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e67e22,
+                    #c0392b
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .boton:hover {
+            transform: scale(1.05);
+
+            box-shadow:
+                0 8px 20px rgba(192,57,43,0.3);
+        }
+
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            background: #291712;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            margin-top: 60px;
+        }
+
+
+        footer h2 {
+            margin-bottom: 12px;
+        }
+
+
+        footer p {
+            color: #ddd;
+            margin: 6px;
+        }
+
+
+        /* ===== CELULAR ===== */
+
+        @media (max-width: 800px) {
+
+            header h1 {
+                font-size: 38px;
+            }
+
+            .eventos {
+                grid-template-columns: 1fr;
+            }
+
+            .paquetes-contenedor {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===== ENCABEZADO ===== -->
+
+<header>
+
+    <h1>🎉 Eventos y Celebraciones</h1>
+
+    <p>
+        Celebra tus momentos más importantes en
+        La Mesa Dorada y convierte cada ocasión
+        en un recuerdo inolvidable.
+    </p>
+
+</header>
+
+
+
+<div class="contenedor">
+
+
+    <!-- ===== INTRODUCCIÓN ===== -->
+
+    <section class="introduccion">
+
+        <h2>✨ Momentos que merecen celebrarse</h2>
+
+        <p>
+
+            En <strong>La Mesa Dorada</strong> sabemos que existen
+            momentos especiales que merecen ser celebrados.
+            Por eso ponemos a tu disposición un espacio agradable
+            para compartir con familiares, amigos y compañeros.
+
+            <br><br>
+
+            Nuestro equipo está preparado para ayudarte a organizar
+            diferentes tipos de eventos, cuidando cada detalle para
+            que puedas disfrutar de una experiencia cómoda,
+            deliciosa y memorable.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ===== TIPOS DE EVENTOS ===== -->
+
+    <section class="eventos">
+
+
+        <!-- CUMPLEAÑOS -->
+
+        <div class="evento">
+
+            <div class="icono">
+                🎂
+            </div>
+
+            <h3>Cumpleaños</h3>
+
+            <p>
+                Celebra tu cumpleaños rodeado de las personas
+                que más quieres y disfruta de una deliciosa
+                comida en un ambiente agradable.
+            </p>
+
+            <ul>
+                <li>Mesas para grupos</li>
+                <li>Decoración especial</li>
+                <li>Opciones de comida</li>
+                <li>Postres</li>
+            </ul>
+
+        </div>
+
+
+
+        <!-- REUNIONES FAMILIARES -->
+
+        <div class="evento">
+
+            <div class="icono">
+                👨‍👩‍👧‍👦
+            </div>
+
+            <h3>Reuniones Familiares</h3>
+
+            <p>
+                Comparte una comida especial con toda tu familia
+                en un espacio cómodo y pensado para disfrutar
+                juntos.
+            </p>
+
+            <ul>
+                <li>Espacios para grupos</li>
+                <li>Menús familiares</li>
+                <li>Atención personalizada</li>
+                <li>Ambiente familiar</li>
+            </ul>
+
+        </div>
+
+
+
+        <!-- ANIVERSARIOS -->
+
+        <div class="evento">
+
+            <div class="icono">
+                ❤️
+            </div>
+
+            <h3>Aniversarios</h3>
+
+            <p>
+                Celebra una fecha especial junto a esa persona
+                importante y disfruta de una experiencia
+                gastronómica inolvidable.
+            </p>
+
+            <ul>
+                <li>Mesa especial</li>
+                <li>Ambiente agradable</li>
+                <li>Opciones de postres</li>
+                <li>Atención personalizada</li>
+            </ul>
+
+        </div>
+
+
+
+        <!-- EVENTOS EMPRESARIALES -->
+
+        <div class="evento">
+
+            <div class="icono">
+                💼
+            </div>
+
+            <h3>Eventos Empresariales</h3>
+
+            <p>
+                Organizamos espacios para reuniones de trabajo,
+                comidas empresariales y diferentes actividades
+                de empresas.
+            </p>
+
+            <ul>
+                <li>Espacio para reuniones</li>
+                <li>Menús para grupos</li>
+                <li>Atención profesional</li>
+                <li>Organización personalizada</li>
+            </ul>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ===== PAQUETES ===== -->
+
+    <section class="paquetes">
+
+        <h2>🍽️ Opciones para tu celebración</h2>
+
+
+        <div class="paquetes-contenedor">
+
+
+            <!-- PAQUETE 1 -->
+
+            <div class="paquete">
+
+                <div class="emoji">
+                    🎉
+                </div>
+
+                <h3>Paquete Familiar</h3>
+
+                <p>
+                    Ideal para compartir una celebración
+                    con familiares y amigos.
+                </p>
+
+                <ul>
+
+                    <li>Mesa reservada</li>
+
+                    <li>Comida para grupos</li>
+
+                    <li>Bebidas</li>
+
+                    <li>Atención personalizada</li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- PAQUETE 2 -->
+
+            <div class="paquete">
+
+                <div class="emoji">
+                    🎂
+                </div>
+
+                <h3>Paquete Cumpleaños</h3>
+
+                <p>
+                    Una opción especial para celebrar
+                    un cumpleaños inolvidable.
+                </p>
+
+                <ul>
+
+                    <li>Decoración sencilla</li>
+
+                    <li>Mesa reservada</li>
+
+                    <li>Comida</li>
+
+                    <li>Postre especial</li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- PAQUETE 3 -->
+
+            <div class="paquete">
+
+                <div class="emoji">
+                    💼
+                </div>
+
+                <h3>Paquete Empresarial</h3>
+
+                <p>
+                    Pensado para reuniones, convivios
+                    y eventos empresariales.
+                </p>
+
+                <ul>
+
+                    <li>Espacio reservado</li>
+
+                    <li>Menú para grupos</li>
+
+                    <li>Bebidas</li>
+
+                    <li>Atención profesional</li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===== INFORMACIÓN ===== -->
+
+    <section class="informacion">
+
+        <h2>📋 ¿Quieres organizar un evento?</h2>
+
+        <p>
+
+            Para conocer la disponibilidad, cantidad de personas
+            y opciones para tu celebración, puedes comunicarte
+            con nosotros o realizar una reservación.
+
+            Nuestro equipo estará encantado de ayudarte a
+            encontrar la mejor opción para tu evento.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ===== BOTÓN RESERVAR ===== -->
+
+    <a href="/#Reservaciones" class="boton">
+                📅 Reservar
+                </a>
+
+
+
+    <!-- ===== BOTÓN INICIO ===== -->
+
+    <a href="/" class="boton">
+
+        🏠 Volver al inicio
+
+    </a>
+
+
+</div>
+
+
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+
+    <h2>🍽️ La Mesa Dorada</h2>
+
+    <p>
+        Sabores que crean momentos inolvidables.
+    </p>
+
+    <p>
+        📍 Armenia, Sonsonate, El Salvador
+    </p>
+
+    <p>
+        📞 +503 6162-6690
+    </p>
+
+    <p>
+        © 2026 La Mesa Dorada - Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

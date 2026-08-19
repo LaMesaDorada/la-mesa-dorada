@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva confirmada</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #8b0000, #e67e22, #f1c40f);
+        }
+
+        .contenedor {
+            width: 90%;
+            max-width: 550px;
+            background: white;
+            padding: 45px 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            animation: aparecer 0.8s ease;
+        }
+
+        .icono {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #27ae60;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        h1 {
+            color: #8b0000;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .mensaje {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .detalle {
+            background: #fff4e6;
+            border-left: 5px solid #e67e22;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            color: #555;
+        }
+
+        .boton {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #e67e22, #c0392b);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(192, 57, 43, 0.4);
+        }
+
+        .despedida {
+            margin-top: 25px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="icono">
+            ✓
+        </div>
+
+        <h1>¡Reserva realizada!</h1>
+
+        <p class="mensaje">
+            Gracias por elegir nuestro restaurante.
+            Hemos recibido correctamente tu solicitud de reserva.
+        </p>
+
+        <div class="detalle">
+            <strong>🍽️ ¡Te esperamos!</strong>
+            <br><br>
+            Tu mesa estará lista para recibirte.
+        </div>
+
+        <a href="/" class="boton">
+            🏠 Volver al inicio
+        </a>
+
+        <p class="despedida">
+            Esperamos que disfrutes una experiencia deliciosa con nosotros ❤️
+        </p>
+
+    </div>
+
+</body>
+</html>

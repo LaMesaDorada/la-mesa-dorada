@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nosotros | La Mesa Dorada</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3ed;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(
+                rgba(80, 20, 10, 0.85),
+                rgba(139, 0, 0, 0.85)
+            );
+
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 20px;
+        }
+
+        .contenedor {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        .seccion {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+        }
+
+        .seccion h2 {
+            color: #8B0000;
+            font-size: 30px;
+            margin-bottom: 20px;
+            border-left: 6px solid #e67e22;
+            padding-left: 15px;
+        }
+
+        .seccion p {
+            font-size: 17px;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+            transition: 0.3s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-8px);
+        }
+
+        .tarjeta .icono {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .tarjeta h3 {
+            color: #8B0000;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .tarjeta p {
+            font-size: 15px;
+        }
+
+        .valores {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .valor {
+            background: #fff4e6;
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 5px solid #e67e22;
+        }
+
+        .valor strong {
+            color: #8B0000;
+        }
+
+        .boton {
+            display: inline-block;
+            background: linear-gradient(135deg, #e67e22, #c0392b);
+            color: white;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(192,57,43,0.3);
+        }
+
+        footer {
+            background: #2c1a14;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+
+            header h1 {
+                font-size: 36px;
+            }
+
+            .tarjetas {
+                grid-template-columns: 1fr;
+            }
+
+            .valores {
+                grid-template-columns: 1fr;
+            }
+
+            .seccion {
+                padding: 25px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <h1>🍽️ La Mesa Dorada</h1>
+
+        <p>
+            Donde cada plato cuenta una historia y cada visita se convierte
+            en un momento especial.
+        </p>
+
+    </header>
+
+
+    <div class="contenedor">
+
+
+        <!-- HISTORIA -->
+
+        <section class="seccion">
+
+            <h2>Nuestra Historia</h2>
+
+            <p>
+                La Mesa Dorada nació con el propósito de crear un espacio
+                donde la buena gastronomía, la atención de calidad y el
+                ambiente familiar se combinaran para ofrecer una experiencia
+                diferente a nuestros clientes.
+            </p>
+
+            <p>
+                Desde nuestros inicios, hemos trabajado con dedicación para
+                construir un restaurante que represente el valor de compartir
+                alrededor de una mesa. Creemos que la comida no solamente
+                satisface el hambre, sino que también tiene el poder de reunir
+                a las personas, crear recuerdos y celebrar momentos importantes.
+            </p>
+
+            <p>
+                Nuestro restaurante se caracteriza por utilizar ingredientes
+                seleccionados cuidadosamente y preparar cada platillo con
+                dedicación. Buscamos mantener la esencia de la cocina
+                tradicional, incorporando al mismo tiempo nuevas ideas que
+                permitan ofrecer una experiencia moderna y agradable.
+            </p>
+
+            <p>
+                Con el paso del tiempo, La Mesa Dorada se ha convertido en un
+                lugar pensado para familias, amigos, parejas y todas aquellas
+                personas que desean disfrutar de una buena comida en un
+                ambiente cómodo, tranquilo y acogedor.
+            </p>
+
+        </section>
+
+
+        <!-- MISION VISION -->
+
+        <div class="tarjetas">
+
+            <div class="tarjeta">
+
+                <div class="icono">🎯</div>
+
+                <h3>Nuestra Misión</h3>
+
+                <p>
+                    Brindar a nuestros clientes una experiencia gastronómica
+                    de calidad mediante platillos preparados con ingredientes
+                    frescos, un servicio amable y profesional, y un ambiente
+                    agradable donde cada persona pueda sentirse como en casa.
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <div class="icono">🌟</div>
+
+                <h3>Nuestra Visión</h3>
+
+                <p>
+                    Ser un restaurante reconocido por la excelencia de
+                    nuestros alimentos, la calidad de nuestro servicio y la
+                    satisfacción de nuestros clientes, creciendo de manera
+                    responsable y convirtiéndonos en un referente gastronómico
+                    de nuestra comunidad.
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <div class="icono">❤️</div>
+
+                <h3>Nuestro Compromiso</h3>
+
+                <p>
+                    Trabajamos diariamente para superar las expectativas de
+                    nuestros clientes, cuidando cada detalle desde la selección
+                    de los ingredientes hasta la atención que reciben durante
+                    su visita.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- VALORES -->
+
+        <section class="seccion">
+
+            <h2>Nuestros Valores</h2>
+
+            <p>
+                En La Mesa Dorada consideramos que nuestros valores son la base
+                de cada actividad que realizamos. Estos principios nos ayudan
+                a mantener un servicio responsable y una relación de confianza
+                con nuestros clientes.
+            </p>
+
+
+            <div class="valores">
+
+                <div class="valor">
+                    <strong>🤝 Respeto:</strong>
+                    Tratamos a nuestros clientes y colaboradores con
+                    amabilidad, educación y consideración.
+                </div>
+
+                <div class="valor">
+                    <strong>⭐ Calidad:</strong>
+                    Nos esforzamos por ofrecer alimentos y servicios que
+                    cumplan con altos estándares.
+                </div>
+
+                <div class="valor">
+                    <strong>💬 Honestidad:</strong>
+                    Mantenemos relaciones transparentes y responsables con
+                    nuestros clientes.
+                </div>
+
+                <div class="valor">
+                    <strong>👨‍🍳 Responsabilidad:</strong>
+                    Cumplimos nuestro trabajo con dedicación y compromiso.
+                </div>
+
+                <div class="valor">
+                    <strong>❤️ Pasión:</strong>
+                    Ponemos entusiasmo y dedicación en cada platillo que
+                    preparamos.
+                </div>
+
+                <div class="valor">
+                    <strong>👥 Trabajo en equipo:</strong>
+                    Colaboramos para ofrecer una mejor experiencia a nuestros
+                    clientes.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPERIENCIA -->
+
+        <section class="seccion">
+
+            <h2>Una Experiencia Para Compartir</h2>
+
+            <p>
+                En La Mesa Dorada queremos que cada visita sea mucho más que
+                una simple comida. Nuestro objetivo es crear un ambiente en el
+                que nuestros clientes puedan relajarse, disfrutar de sus
+                alimentos y compartir momentos especiales con las personas que
+                más aprecian.
+            </p>
+
+            <p>
+                Prestamos atención a los pequeños detalles porque sabemos que
+                estos pueden marcar la diferencia. Desde la presentación de
+                nuestros platillos hasta la atención de nuestro personal,
+                buscamos mantener una experiencia agradable y memorable.
+            </p>
+
+            <p>
+                Ya sea para una comida familiar, una celebración, una reunión
+                con amigos o simplemente para disfrutar de un delicioso
+                platillo, las puertas de La Mesa Dorada están abiertas para
+                recibirte.
+            </p>
+
+        </section>
+
+
+        <!-- BOTONES -->
+
+        <div style="text-align: center;">
+
+            <a href="/" class="boton">
+                🏠 Volver al Inicio
+            </a>
+
+        
+
+            
+
+        </div>
+
+
+    </div>
+
+
+    <footer>
+
+        <h3>La Mesa Dorada</h3>
+
+        <p>
+            Sabores que crean momentos inolvidables.
+        </p>
+
+        <p>
+            © 2026 La Mesa Dorada - Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+</body>
+</html>
