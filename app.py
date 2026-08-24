@@ -17,9 +17,8 @@ app = Flask(__name__)
 
 def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
-    # Estas dos variables las pondremos en Render
-    remitente = os.environ.get("EMAIL_USER")
-    password = os.environ.get("EMAIL_PASSWORD")
+    remitente = os.environ.get("omarhernandezp0@gmail.com")
+    password = os.environ.get("glzm vioh kvzg lxre")
 
     mensaje = MIMEMultipart()
 
