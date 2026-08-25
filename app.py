@@ -17,17 +17,24 @@ app = Flask(__name__)
 
 def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
-    remitente = os.environ.get("omarhernandezp0@gmail.com")
-    password = os.environ.get("glzm vioh kvzg lxre")
+    # Estas son las variables que debes tener configuradas
+    # en Render → Environment Variables
+    remitente = os.environ.get("EMAIL_USER")
+    password = os.environ.get("EMAIL_PASSWORD")
+
+    # Verificar que las variables existan
+    if not remitente or not password:
+        print("ERROR: No están configuradas EMAIL_USER o EMAIL_PASSWORD en Render.")
+        return False
 
     mensaje = MIMEMultipart()
 
     mensaje["From"] = remitente
     mensaje["To"] = correo
 
-    # ==============================
+    # =================================================
     # RESERVA ACEPTADA
-    # ==============================
+    # =================================================
 
     if estado == "Aceptada":
 
@@ -54,9 +61,9 @@ Saludos,
 La Mesa Dorada
 """
 
-    # ==============================
+    # =================================================
     # RESERVA RECHAZADA
-    # ==============================
+    # =================================================
 
     else:
 
@@ -86,25 +93,44 @@ La Mesa Dorada
         MIMEText(cuerpo, "plain")
     )
 
-    servidor = smtplib.SMTP(
-        "smtp.gmail.com",
-        587
-    )
+    # =================================================
+    # CONEXIÓN CON GMAIL
+    # =================================================
 
-    servidor.starttls()
+    try:
 
-    servidor.login(
-        remitente,
-        password
-    )
+        servidor = smtplib.SMTP(
+            "smtp.gmail.com",
+            587,
+            timeout=10
+        )
 
-    servidor.sendmail(
-        remitente,
-        correo,
-        mensaje.as_string()
-    )
+        servidor.starttls()
 
-    servidor.quit()
+        servidor.login(
+            remitente,
+            password
+        )
+
+        servidor.sendmail(
+            remitente,
+            correo,
+            mensaje.as_string()
+        )
+
+        servidor.quit()
+
+        print("Correo enviado correctamente.")
+
+        return True
+
+    except Exception as error:
+
+        # IMPORTANTE:
+        # Si Gmail falla, la aplicación NO se cae.
+        print("No se pudo enviar el correo:", error)
+
+        return False
 
 
 # =====================================================
@@ -182,14 +208,25 @@ def reservar():
     fecha = request.form["fecha"]
     hora = request.form["hora"]
 
-    # ==============================
+    # =================================================
     # VALIDAR FECHA
-    # ==============================
+    # =================================================
 
-    fecha_reserva = datetime.strptime(
-        fecha,
-        "%Y-%m-%d"
-    ).date()
+    try:
+
+        fecha_reserva = datetime.strptime(
+            fecha,
+            "%Y-%m-%d"
+        ).date()
+
+    except ValueError:
+
+        conexion.close()
+
+        return """
+        <h2>La fecha no es válida.</h2>
+        <a href="/">Volver</a>
+        """
 
     fecha_actual = datetime.now().date()
 
@@ -202,9 +239,9 @@ def reservar():
         <a href="/">Volver</a>
         """
 
-    # ==============================
+    # =================================================
     # GUARDAR RESERVA
-    # ==============================
+    # =================================================
 
     cursor.execute("""
         INSERT INTO reservas
@@ -384,6 +421,10 @@ def aceptar(id):
 
         nombre, correo, fecha, hora, personas = reserva
 
+        # =================================================
+        # CAMBIAR ESTADO A ACEPTADA
+        # =================================================
+
         cursor.execute("""
             UPDATE reservas
             SET estado = 'Aceptada'
@@ -394,33 +435,29 @@ def aceptar(id):
 
         conexion.close()
 
-        try:
+        # =================================================
+        # ENVIAR CORREO
+        # =================================================
 
-            enviar_notificacion(
-                correo,
-                nombre,
-                fecha,
-                hora,
-                personas,
-                "Aceptada"
-            )
-
-        except Exception as error:
-
-            print(
-                "Error enviando correo:",
-                error
-            )
+        enviar_notificacion(
+            correo,
+            nombre,
+            fecha,
+            hora,
+            personas,
+            "Aceptada"
+        )
 
     else:
 
         conexion.close()
 
+    # Volver al panel
     return redirect("/admin")
 
 
 # =====================================================
-# RECHAZAR RESERVACIÓN
+# RECHAZAR Y ELIMINAR RESERVACIÓN
 # =====================================================
 
 @app.route(
@@ -452,9 +489,9 @@ def rechazar(id):
 
         nombre, correo, fecha, hora, personas = reserva
 
-        # ==============================
+        # =================================================
         # ELIMINAR RESERVA
-        # ==============================
+        # =================================================
 
         cursor.execute("""
             DELETE FROM reservas
@@ -465,31 +502,26 @@ def rechazar(id):
 
         conexion.close()
 
-        # ==============================
-        # ENVIAR CORREO
-        # ==============================
+        # =================================================
+        # ENVIAR CORREO DE RECHAZO
+        # =================================================
 
-        try:
-
-            enviar_notificacion(
-                correo,
-                nombre,
-                fecha,
-                hora,
-                personas,
-                "Rechazada"
-            )
-
-        except Exception as error:
-
-            print(
-                "Error enviando correo:",
-                error
-            )
+        enviar_notificacion(
+            correo,
+            nombre,
+            fecha,
+            hora,
+            personas,
+            "Rechazada"
+        )
 
     else:
 
         conexion.close()
+
+    # =================================================
+    # VOLVER AL PANEL
+    # =================================================
 
     return redirect("/admin")
 
@@ -501,5 +533,7 @@ def rechazar(id):
 if __name__ == "__main__":
 
     app.run(
-        debug=True
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
     )
