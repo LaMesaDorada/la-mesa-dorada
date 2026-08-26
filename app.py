@@ -1,15 +1,26 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import os
 import resend
 from datetime import datetime
 
+
 app = Flask(__name__)
+
+# =====================================================
+# CONFIGURACIÓN DE SEGURIDAD
+# =====================================================
+
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "clave-temporal"
+)
 
 
 # =====================================================
 # CONFIGURACIÓN DE RESEND
 # =====================================================
+
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 
 if RESEND_API_KEY:
@@ -17,14 +28,38 @@ if RESEND_API_KEY:
 
 
 # =====================================================
+# CONFIGURACIÓN DEL ADMINISTRADOR
+# =====================================================
+
+ADMIN_USUARIO = os.environ.get(
+    "ADMIN_USUARIO",
+    "admin"
+)
+
+ADMIN_PASSWORD = os.environ.get(
+    "ADMIN_PASSWORD",
+    "MesaDorada2026"
+)
+
+
+# =====================================================
 # ENVIAR CORREO
 # =====================================================
 
-def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
+def enviar_notificacion(
+    correo,
+    nombre,
+    fecha,
+    hora,
+    personas,
+    estado
+):
 
     if not RESEND_API_KEY:
 
-        print("ERROR: No existe RESEND_API_KEY en Render.")
+        print(
+            "ERROR: No existe RESEND_API_KEY en Render."
+        )
 
         return False
 
@@ -35,27 +70,46 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
     if estado == "Aceptada":
 
-        asunto = "Reserva aceptada - La Mesa Dorada"
+        asunto = (
+            "Reserva aceptada - La Mesa Dorada"
+        )
 
         cuerpo = f"""
         <html>
+
         <body>
 
         <h2>Reserva aceptada</h2>
 
-        <p>Hola <strong>{nombre}</strong>:</p>
-
         <p>
-        Nos complace informarte que tu reserva en
-        <strong>La Mesa Dorada</strong> ha sido ACEPTADA.
+        Hola <strong>{nombre}</strong>:
         </p>
 
-        <h3>Detalles de tu reserva:</h3>
+        <p>
+        Nos complace informarte que tu reserva
+        en <strong>La Mesa Dorada</strong>
+        ha sido ACEPTADA.
+        </p>
+
+        <h3>
+        Detalles de tu reserva:
+        </h3>
 
         <p>
-        <strong>Fecha:</strong> {fecha}<br>
-        <strong>Hora:</strong> {hora}<br>
-        <strong>Personas:</strong> {personas}
+
+        <strong>Fecha:</strong>
+        {fecha}
+
+        <br>
+
+        <strong>Hora:</strong>
+        {hora}
+
+        <br>
+
+        <strong>Personas:</strong>
+        {personas}
+
         </p>
 
         <p>
@@ -67,11 +121,19 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
         </p>
 
         <p>
-        Saludos,<br>
-        <strong>La Mesa Dorada</strong>
+
+        Saludos,
+
+        <br>
+
+        <strong>
+        La Mesa Dorada
+        </strong>
+
         </p>
 
         </body>
+
         </html>
         """
 
@@ -82,40 +144,67 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
     else:
 
-        asunto = "Reserva rechazada - La Mesa Dorada"
+        asunto = (
+            "Reserva rechazada - La Mesa Dorada"
+        )
 
         cuerpo = f"""
         <html>
+
         <body>
 
         <h2>Reserva rechazada</h2>
 
-        <p>Hola <strong>{nombre}</strong>:</p>
-
         <p>
-        Lamentamos informarte que tu reserva en
-        <strong>La Mesa Dorada</strong> ha sido RECHAZADA.
-        </p>
-
-        <h3>Detalles de la reserva:</h3>
-
-        <p>
-        <strong>Fecha:</strong> {fecha}<br>
-        <strong>Hora:</strong> {hora}<br>
-        <strong>Personas:</strong> {personas}
+        Hola <strong>{nombre}</strong>:
         </p>
 
         <p>
-        Si lo deseas, puedes realizar una nueva reserva
-        para otra fecha u horario.
+        Lamentamos informarte que tu reserva
+        en <strong>La Mesa Dorada</strong>
+        ha sido RECHAZADA.
+        </p>
+
+        <h3>
+        Detalles de la reserva:
+        </h3>
+
+        <p>
+
+        <strong>Fecha:</strong>
+        {fecha}
+
+        <br>
+
+        <strong>Hora:</strong>
+        {hora}
+
+        <br>
+
+        <strong>Personas:</strong>
+        {personas}
+
         </p>
 
         <p>
-        Saludos,<br>
-        <strong>La Mesa Dorada</strong>
+        Si lo deseas, puedes realizar una
+        nueva reserva para otra fecha u horario.
+        </p>
+
+        <p>
+
+        Saludos,
+
+        <br>
+
+        <strong>
+        La Mesa Dorada
+        </strong>
+
         </p>
 
         </body>
+
         </html>
         """
 
@@ -127,22 +216,41 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
     try:
 
         parametros = {
-            "from": "La Mesa Dorada <onboarding@resend.dev>",
-            "to": [correo],
-            "subject": asunto,
-            "html": cuerpo
+
+            "from":
+                "La Mesa Dorada <onboarding@resend.dev>",
+
+            "to":
+                [correo],
+
+            "subject":
+                asunto,
+
+            "html":
+                cuerpo
         }
 
-        resultado = resend.Emails.send(parametros)
 
-        print("Correo enviado:", resultado)
+        resultado = resend.Emails.send(
+            parametros
+        )
+
+
+        print(
+            "Correo enviado:",
+            resultado
+        )
+
 
         return True
 
 
     except Exception as error:
 
-        print("ERROR DE RESEND:", error)
+        print(
+            "ERROR DE RESEND:",
+            error
+        )
 
         return False
 
@@ -153,9 +261,12 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
 def crear_bd():
 
-    conexion = sqlite3.connect("restaurante.db")
+    conexion = sqlite3.connect(
+        "restaurante.db"
+    )
 
     cursor = conexion.cursor()
+
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS reservas(
@@ -181,6 +292,7 @@ def crear_bd():
         )
     """)
 
+
     conexion.commit()
 
     conexion.close()
@@ -196,19 +308,27 @@ crear_bd()
 @app.route("/")
 def inicio():
 
-    return render_template("index.html")
+    return render_template(
+        "index.html"
+    )
 
 
 # =====================================================
 # GUARDAR RESERVACIÓN
 # =====================================================
 
-@app.route("/reservar", methods=["POST"])
+@app.route(
+    "/reservar",
+    methods=["POST"]
+)
 def reservar():
 
-    conexion = sqlite3.connect("restaurante.db")
+    conexion = sqlite3.connect(
+        "restaurante.db"
+    )
 
     cursor = conexion.cursor()
+
 
     fecha = request.form["fecha"]
 
@@ -226,13 +346,19 @@ def reservar():
             "%Y-%m-%d"
         ).date()
 
+
     except ValueError:
 
         conexion.close()
 
         return """
-        <h2>La fecha no es válida.</h2>
-        <a href="/">Volver</a>
+        <h2>
+        La fecha no es válida.
+        </h2>
+
+        <a href="/">
+        Volver
+        </a>
         """
 
 
@@ -244,8 +370,14 @@ def reservar():
         conexion.close()
 
         return """
-        <h2>No se permiten reservas para fechas pasadas.</h2>
-        <a href="/">Volver</a>
+        <h2>
+        No se permiten reservas
+        para fechas pasadas.
+        </h2>
+
+        <a href="/">
+        Volver
+        </a>
         """
 
 
@@ -264,15 +396,23 @@ def reservar():
             personas,
             comentarios
         )
+
         VALUES (?, ?, ?, ?, ?, ?, ?)
+
     """, (
 
         request.form["nombre"],
+
         request.form["correo"],
+
         request.form["telefono"],
+
         request.form["fecha"],
+
         request.form["hora"],
+
         request.form["personas"],
+
         request.form["comentarios"]
 
     ))
@@ -283,7 +423,9 @@ def reservar():
     conexion.close()
 
 
-    return render_template("gracias.html")
+    return render_template(
+        "gracias.html"
+    )
 
 
 # =====================================================
@@ -293,7 +435,9 @@ def reservar():
 @app.route("/ubicacion")
 def ubicacion():
 
-    return render_template("ubicacion.html")
+    return render_template(
+        "ubicacion.html"
+    )
 
 
 # =====================================================
@@ -303,7 +447,9 @@ def ubicacion():
 @app.route("/nosotros")
 def nosotros():
 
-    return render_template("nosotros.html")
+    return render_template(
+        "nosotros.html"
+    )
 
 
 # =====================================================
@@ -313,7 +459,9 @@ def nosotros():
 @app.route("/contacto")
 def contacto():
 
-    return render_template("contacto.html")
+    return render_template(
+        "contacto.html"
+    )
 
 
 # =====================================================
@@ -323,7 +471,9 @@ def contacto():
 @app.route("/promociones")
 def promociones():
 
-    return render_template("promociones.html")
+    return render_template(
+        "promociones.html"
+    )
 
 
 # =====================================================
@@ -333,7 +483,9 @@ def promociones():
 @app.route("/eventos")
 def eventos():
 
-    return render_template("eventos.html")
+    return render_template(
+        "eventos.html"
+    )
 
 
 # =====================================================
@@ -343,7 +495,9 @@ def eventos():
 @app.route("/horarios")
 def horarios():
 
-    return render_template("horarios.html")
+    return render_template(
+        "horarios.html"
+    )
 
 
 # =====================================================
@@ -353,7 +507,85 @@ def horarios():
 @app.route("/testimonios")
 def testimonios():
 
-    return render_template("testimonios.html")
+    return render_template(
+        "testimonios.html"
+    )
+
+
+# =====================================================
+# LOGIN DEL ADMINISTRADOR
+# =====================================================
+
+@app.route(
+    "/login",
+    methods=["GET", "POST"]
+)
+def login():
+
+    # Si ya inició sesión,
+    # enviarlo directamente al admin.
+
+    if session.get("admin"):
+
+        return redirect("/admin")
+
+
+    # =================================================
+    # PROCESAR LOGIN
+    # =================================================
+
+    if request.method == "POST":
+
+        usuario = request.form.get(
+            "usuario",
+            ""
+        )
+
+        contraseña = request.form.get(
+            "contraseña",
+            ""
+        )
+
+
+        # =================================================
+        # COMPROBAR CREDENCIALES
+        # =================================================
+
+        if (
+            usuario == ADMIN_USUARIO
+            and
+            contraseña == ADMIN_PASSWORD
+        ):
+
+            session["admin"] = True
+
+            return redirect("/admin")
+
+
+        return render_template(
+            "login.html",
+            error="Usuario o contraseña incorrectos"
+        )
+
+
+    return render_template(
+        "login.html"
+    )
+
+
+# =====================================================
+# CERRAR SESIÓN
+# =====================================================
+
+@app.route("/logout")
+def logout():
+
+    session.pop(
+        "admin",
+        None
+    )
+
+    return redirect("/login")
 
 
 # =====================================================
@@ -363,19 +595,36 @@ def testimonios():
 @app.route("/admin")
 def admin():
 
-    conexion = sqlite3.connect("restaurante.db")
+    # =================================================
+    # PROTEGER ADMIN
+    # =================================================
+
+    if not session.get("admin"):
+
+        return redirect("/login")
+
+
+    conexion = sqlite3.connect(
+        "restaurante.db"
+    )
 
     cursor = conexion.cursor()
 
+
     cursor.execute("""
         SELECT *
+
         FROM reservas
+
         ORDER BY id DESC
     """)
 
+
     reservas = cursor.fetchall()
 
+
     conexion.close()
+
 
     return render_template(
         "admin.html",
@@ -387,12 +636,26 @@ def admin():
 # ACEPTAR RESERVACIÓN
 # =====================================================
 
-@app.route("/aceptar/<int:id>")
+@app.route(
+    "/aceptar/<int:id>"
+)
 def aceptar(id):
 
-    conexion = sqlite3.connect("restaurante.db")
+    # =================================================
+    # COMPROBAR SESIÓN
+    # =================================================
+
+    if not session.get("admin"):
+
+        return redirect("/login")
+
+
+    conexion = sqlite3.connect(
+        "restaurante.db"
+    )
 
     cursor = conexion.cursor()
+
 
     cursor.execute("""
         SELECT
@@ -401,9 +664,12 @@ def aceptar(id):
             fecha,
             hora,
             personas
+
         FROM reservas
+
         WHERE id=?
     """, (id,))
+
 
     reserva = cursor.fetchone()
 
@@ -413,11 +679,15 @@ def aceptar(id):
         nombre, correo, fecha, hora, personas = reserva
 
 
-        # Cambiar estado
+        # =================================================
+        # CAMBIAR ESTADO
+        # =================================================
 
         cursor.execute("""
             UPDATE reservas
+
             SET estado = 'Aceptada'
+
             WHERE id = ?
         """, (id,))
 
@@ -427,15 +697,24 @@ def aceptar(id):
         conexion.close()
 
 
-        # Enviar correo
+        # =================================================
+        # ENVIAR CORREO
+        # =================================================
 
         enviar_notificacion(
+
             correo,
+
             nombre,
+
             fecha,
+
             hora,
+
             personas,
+
             "Aceptada"
+
         )
 
 
@@ -451,12 +730,27 @@ def aceptar(id):
 # RECHAZAR Y ELIMINAR RESERVACIÓN
 # =====================================================
 
-@app.route("/rechazar/<int:id>", methods=["POST"])
+@app.route(
+    "/rechazar/<int:id>",
+    methods=["POST"]
+)
 def rechazar(id):
 
-    conexion = sqlite3.connect("restaurante.db")
+    # =================================================
+    # COMPROBAR SESIÓN
+    # =================================================
+
+    if not session.get("admin"):
+
+        return redirect("/login")
+
+
+    conexion = sqlite3.connect(
+        "restaurante.db"
+    )
 
     cursor = conexion.cursor()
+
 
     cursor.execute("""
         SELECT
@@ -465,9 +759,12 @@ def rechazar(id):
             fecha,
             hora,
             personas
+
         FROM reservas
+
         WHERE id=?
     """, (id,))
+
 
     reserva = cursor.fetchone()
 
@@ -477,10 +774,13 @@ def rechazar(id):
         nombre, correo, fecha, hora, personas = reserva
 
 
-        # Eliminar reserva
+        # =================================================
+        # ELIMINAR RESERVA
+        # =================================================
 
         cursor.execute("""
             DELETE FROM reservas
+
             WHERE id=?
         """, (id,))
 
@@ -490,15 +790,24 @@ def rechazar(id):
         conexion.close()
 
 
-        # Enviar correo de rechazo
+        # =================================================
+        # ENVIAR CORREO
+        # =================================================
 
         enviar_notificacion(
+
             correo,
+
             nombre,
+
             fecha,
+
             hora,
+
             personas,
+
             "Rechazada"
+
         )
 
 
@@ -517,8 +826,16 @@ def rechazar(id):
 if __name__ == "__main__":
 
     app.run(
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000)),
-        debug=False
-    )
 
+        host="0.0.0.0",
+
+        port=int(
+            os.environ.get(
+                "PORT",
+                5000
+            )
+        ),
+
+        debug=False
+
+    )
