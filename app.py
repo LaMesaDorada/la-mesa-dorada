@@ -10,7 +10,6 @@ app = Flask(__name__)
 # =====================================================
 # CONFIGURACIÓN DE RESEND
 # =====================================================
-
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 
 if RESEND_API_KEY:
