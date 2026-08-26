@@ -1,36 +1,34 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
-import smtplib
 import os
-
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
 from datetime import datetime
-
 
 app = Flask(__name__)
 
 
 # =====================================================
-# CONFIGURACIÓN DEL CORREO
+# CONFIGURACIÓN DE RESEND
+# =====================================================
+
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
+
+
+# =====================================================
+# ENVIAR CORREO
 # =====================================================
 
 def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
-    # Estas son las variables que debes tener configuradas
-    # en Render → Environment Variables
-    remitente = os.environ.get("EMAIL_USER")
-    password = os.environ.get("EMAIL_PASSWORD")
+    if not RESEND_API_KEY:
 
-    # Verificar que las variables existan
-    if not remitente or not password:
-        print("ERROR: No están configuradas EMAIL_USER o EMAIL_PASSWORD en Render.")
+        print("ERROR: No existe RESEND_API_KEY en Render.")
+
         return False
 
-    mensaje = MIMEMultipart()
-
-    mensaje["From"] = remitente
-    mensaje["To"] = correo
 
     # =================================================
     # RESERVA ACEPTADA
@@ -38,28 +36,46 @@ def enviar_notificacion(correo, nombre, fecha, hora, personas, estado):
 
     if estado == "Aceptada":
 
-        mensaje["Subject"] = "Reserva aceptada - La Mesa Dorada"
+        asunto = "Reserva aceptada - La Mesa Dorada"
 
         cuerpo = f"""
-Hola {nombre}:
+        <html>
+        <body>
 
-Nos complace informarte que tu reserva en La Mesa Dorada
-ha sido ACEPTADA.
+        <h2>Reserva aceptada</h2>
 
-Detalles de tu reserva:
+        <p>Hola <strong>{nombre}</strong>:</p>
 
-Fecha: {fecha}
-Hora: {hora}
-Personas: {personas}
+        <p>
+        Nos complace informarte que tu reserva en
+        <strong>La Mesa Dorada</strong> ha sido ACEPTADA.
+        </p>
 
-Te esperamos en nuestro restaurante.
+        <h3>Detalles de tu reserva:</h3>
 
-¡Gracias por elegir La Mesa Dorada!
+        <p>
+        <strong>Fecha:</strong> {fecha}<br>
+        <strong>Hora:</strong> {hora}<br>
+        <strong>Personas:</strong> {personas}
+        </p>
 
-Saludos,
+        <p>
+        Te esperamos en nuestro restaurante.
+        </p>
 
-La Mesa Dorada
-"""
+        <p>
+        ¡Gracias por elegir La Mesa Dorada!
+        </p>
+
+        <p>
+        Saludos,<br>
+        <strong>La Mesa Dorada</strong>
+        </p>
+
+        </body>
+        </html>
+        """
+
 
     # =================================================
     # RESERVA RECHAZADA
@@ -67,68 +83,67 @@ La Mesa Dorada
 
     else:
 
-        mensaje["Subject"] = "Reserva rechazada - La Mesa Dorada"
+        asunto = "Reserva rechazada - La Mesa Dorada"
 
         cuerpo = f"""
-Hola {nombre}:
+        <html>
+        <body>
 
-Lamentamos informarte que tu reserva en La Mesa Dorada
-ha sido RECHAZADA.
+        <h2>Reserva rechazada</h2>
 
-Detalles de la reserva:
+        <p>Hola <strong>{nombre}</strong>:</p>
 
-Fecha: {fecha}
-Hora: {hora}
-Personas: {personas}
+        <p>
+        Lamentamos informarte que tu reserva en
+        <strong>La Mesa Dorada</strong> ha sido RECHAZADA.
+        </p>
 
-Si lo deseas, puedes realizar una nueva reserva
-para otra fecha u horario.
+        <h3>Detalles de la reserva:</h3>
 
-Saludos,
+        <p>
+        <strong>Fecha:</strong> {fecha}<br>
+        <strong>Hora:</strong> {hora}<br>
+        <strong>Personas:</strong> {personas}
+        </p>
 
-La Mesa Dorada
-"""
+        <p>
+        Si lo deseas, puedes realizar una nueva reserva
+        para otra fecha u horario.
+        </p>
 
-    mensaje.attach(
-        MIMEText(cuerpo, "plain")
-    )
+        <p>
+        Saludos,<br>
+        <strong>La Mesa Dorada</strong>
+        </p>
+
+        </body>
+        </html>
+        """
+
 
     # =================================================
-    # CONEXIÓN CON GMAIL
+    # ENVIAR CON RESEND
     # =================================================
 
     try:
 
-        servidor = smtplib.SMTP(
-            "smtp.gmail.com",
-            587,
-            timeout=10
-        )
+        parametros = {
+            "from": "La Mesa Dorada <onboarding@resend.dev>",
+            "to": [correo],
+            "subject": asunto,
+            "html": cuerpo
+        }
 
-        servidor.starttls()
+        resultado = resend.Emails.send(parametros)
 
-        servidor.login(
-            remitente,
-            password
-        )
-
-        servidor.sendmail(
-            remitente,
-            correo,
-            mensaje.as_string()
-        )
-
-        servidor.quit()
-
-        print("Correo enviado correctamente.")
+        print("Correo enviado:", resultado)
 
         return True
 
+
     except Exception as error:
 
-        # IMPORTANTE:
-        # Si Gmail falla, la aplicación NO se cae.
-        print("No se pudo enviar el correo:", error)
+        print("ERROR DE RESEND:", error)
 
         return False
 
@@ -139,9 +154,7 @@ La Mesa Dorada
 
 def crear_bd():
 
-    conexion = sqlite3.connect(
-        "restaurante.db"
-    )
+    conexion = sqlite3.connect("restaurante.db")
 
     cursor = conexion.cursor()
 
@@ -184,29 +197,24 @@ crear_bd()
 @app.route("/")
 def inicio():
 
-    return render_template(
-        "index.html"
-    )
+    return render_template("index.html")
 
 
 # =====================================================
 # GUARDAR RESERVACIÓN
 # =====================================================
 
-@app.route(
-    "/reservar",
-    methods=["POST"]
-)
+@app.route("/reservar", methods=["POST"])
 def reservar():
 
-    conexion = sqlite3.connect(
-        "restaurante.db"
-    )
+    conexion = sqlite3.connect("restaurante.db")
 
     cursor = conexion.cursor()
 
     fecha = request.form["fecha"]
+
     hora = request.form["hora"]
+
 
     # =================================================
     # VALIDAR FECHA
@@ -228,7 +236,9 @@ def reservar():
         <a href="/">Volver</a>
         """
 
+
     fecha_actual = datetime.now().date()
+
 
     if fecha_reserva < fecha_actual:
 
@@ -238,6 +248,7 @@ def reservar():
         <h2>No se permiten reservas para fechas pasadas.</h2>
         <a href="/">Volver</a>
         """
+
 
     # =================================================
     # GUARDAR RESERVA
@@ -267,13 +278,13 @@ def reservar():
 
     ))
 
+
     conexion.commit()
 
     conexion.close()
 
-    return render_template(
-        "gracias.html"
-    )
+
+    return render_template("gracias.html")
 
 
 # =====================================================
@@ -283,9 +294,7 @@ def reservar():
 @app.route("/ubicacion")
 def ubicacion():
 
-    return render_template(
-        "ubicacion.html"
-    )
+    return render_template("ubicacion.html")
 
 
 # =====================================================
@@ -295,9 +304,7 @@ def ubicacion():
 @app.route("/nosotros")
 def nosotros():
 
-    return render_template(
-        "nosotros.html"
-    )
+    return render_template("nosotros.html")
 
 
 # =====================================================
@@ -307,9 +314,7 @@ def nosotros():
 @app.route("/contacto")
 def contacto():
 
-    return render_template(
-        "contacto.html"
-    )
+    return render_template("contacto.html")
 
 
 # =====================================================
@@ -319,9 +324,7 @@ def contacto():
 @app.route("/promociones")
 def promociones():
 
-    return render_template(
-        "promociones.html"
-    )
+    return render_template("promociones.html")
 
 
 # =====================================================
@@ -331,9 +334,7 @@ def promociones():
 @app.route("/eventos")
 def eventos():
 
-    return render_template(
-        "eventos.html"
-    )
+    return render_template("eventos.html")
 
 
 # =====================================================
@@ -343,9 +344,7 @@ def eventos():
 @app.route("/horarios")
 def horarios():
 
-    return render_template(
-        "horarios.html"
-    )
+    return render_template("horarios.html")
 
 
 # =====================================================
@@ -355,9 +354,7 @@ def horarios():
 @app.route("/testimonios")
 def testimonios():
 
-    return render_template(
-        "testimonios.html"
-    )
+    return render_template("testimonios.html")
 
 
 # =====================================================
@@ -367,9 +364,7 @@ def testimonios():
 @app.route("/admin")
 def admin():
 
-    conexion = sqlite3.connect(
-        "restaurante.db"
-    )
+    conexion = sqlite3.connect("restaurante.db")
 
     cursor = conexion.cursor()
 
@@ -393,14 +388,10 @@ def admin():
 # ACEPTAR RESERVACIÓN
 # =====================================================
 
-@app.route(
-    "/aceptar/<int:id>"
-)
+@app.route("/aceptar/<int:id>")
 def aceptar(id):
 
-    conexion = sqlite3.connect(
-        "restaurante.db"
-    )
+    conexion = sqlite3.connect("restaurante.db")
 
     cursor = conexion.cursor()
 
@@ -417,13 +408,13 @@ def aceptar(id):
 
     reserva = cursor.fetchone()
 
+
     if reserva:
 
         nombre, correo, fecha, hora, personas = reserva
 
-        # =================================================
-        # CAMBIAR ESTADO A ACEPTADA
-        # =================================================
+
+        # Cambiar estado
 
         cursor.execute("""
             UPDATE reservas
@@ -431,13 +422,13 @@ def aceptar(id):
             WHERE id = ?
         """, (id,))
 
+
         conexion.commit()
 
         conexion.close()
 
-        # =================================================
-        # ENVIAR CORREO
-        # =================================================
+
+        # Enviar correo
 
         enviar_notificacion(
             correo,
@@ -448,11 +439,12 @@ def aceptar(id):
             "Aceptada"
         )
 
+
     else:
 
         conexion.close()
 
-    # Volver al panel
+
     return redirect("/admin")
 
 
@@ -460,15 +452,10 @@ def aceptar(id):
 # RECHAZAR Y ELIMINAR RESERVACIÓN
 # =====================================================
 
-@app.route(
-    "/rechazar/<int:id>",
-    methods=["POST"]
-)
+@app.route("/rechazar/<int:id>", methods=["POST"])
 def rechazar(id):
 
-    conexion = sqlite3.connect(
-        "restaurante.db"
-    )
+    conexion = sqlite3.connect("restaurante.db")
 
     cursor = conexion.cursor()
 
@@ -485,26 +472,26 @@ def rechazar(id):
 
     reserva = cursor.fetchone()
 
+
     if reserva:
 
         nombre, correo, fecha, hora, personas = reserva
 
-        # =================================================
-        # ELIMINAR RESERVA
-        # =================================================
+
+        # Eliminar reserva
 
         cursor.execute("""
             DELETE FROM reservas
             WHERE id=?
         """, (id,))
 
+
         conexion.commit()
 
         conexion.close()
 
-        # =================================================
-        # ENVIAR CORREO DE RECHAZO
-        # =================================================
+
+        # Enviar correo de rechazo
 
         enviar_notificacion(
             correo,
@@ -515,13 +502,11 @@ def rechazar(id):
             "Rechazada"
         )
 
+
     else:
 
         conexion.close()
 
-    # =================================================
-    # VOLVER AL PANEL
-    # =================================================
 
     return redirect("/admin")
 
@@ -537,3 +522,4 @@ if __name__ == "__main__":
         port=int(os.environ.get("PORT", 5000)),
         debug=False
     )
+
